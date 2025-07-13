@@ -22,7 +22,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const url = 'http://localhost:3000';
+  const url = 'https://e-commerce-project-6wl4.onrender.com';
 
   const handleTogglePassword = () => {
     setShowPassword((prev) => !prev);
@@ -66,7 +66,6 @@ const Login = () => {
         justifyContent: 'center',
       }}
     >
-      {/* Dark Blur Overlay */}
       <Box
         sx={{
           position: 'absolute',
