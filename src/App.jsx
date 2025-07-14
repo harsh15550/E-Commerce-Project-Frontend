@@ -75,14 +75,11 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (Array.isArray(allProduct) && allProduct.length > 0) {
-        setShowLoader(false);
-      }
-    }, 100);
+  if (Array.isArray(allProduct)) {
+    setShowLoader(false); // Even if product is empty, we stop loader
+  }
+}, [allProduct]);
 
-    return () => clearTimeout(timer);
-  }, [allProduct]);
 
   if (!user && (allProduct.length === 0)) {
     return (
