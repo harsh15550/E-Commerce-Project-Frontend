@@ -15,7 +15,7 @@ import {
 import axios from 'axios';
 
 const DashboardHome = () => {
-  const url = 'https://e-commerce-project-6wl4.onrender.com';
+  const url = 'http://localhost:3000';
   const [orders, setOrders] = useState([]);
   const [rows, setRows] = useState([]);
   const [totalSale, setTotalSale] = useState();
@@ -46,6 +46,7 @@ const DashboardHome = () => {
     }
   }
 
+
   const getUsers = async () => {
     try {
       const response = await axios.get(`${url}/api/admin/users`, { withCredentials: true });
@@ -58,12 +59,18 @@ const DashboardHome = () => {
   };
 
   useEffect(() => {
-    const totalDiscount = rows.reduce((total, item) => total + ((item.price * item.discount) / 100), 0);
+  const totalSale = orders.reduce((total, order) => {
+    const matchingRow = rows.find(row => row._id === order.products[0].productId._id);
+    const discount = matchingRow ? (matchingRow.price * matchingRow.discount) / 100 : 0;
+    console.log(order);
+        
+    const price = Math.round(order.totalAmount);
+    return total + (price - discount);
+  }, 0);
 
-    const totalSale = orders.reduce((total, item) => total + Math.round(item.products[0].price), 0);
+  setTotalSale(totalSale);
+}, [rows, orders]);
 
-    setTotalSale(totalSale - totalDiscount);
-  }, [rows, orders]);
 
 
   useEffect(() => {
